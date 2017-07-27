@@ -1,1 +1,278 @@
+JPA Standalone -  performance, query correctness
+XML Generator
+SVN Tagging utility
+Service Virtualization
+REST invoker from main
+REST wrapper classes
+Load balancing for REST URI
+Error message replay
+
+Unit testing enterprise components
+Multiple applications in a container
+
+Maven
+profile
+multimodule
+archetype
+phases/lifecycle
+test, code coverage
+static code analysis
+
+ORM
+Why JPA
+ORM v/s JDBC
+Entity States -(Persistent, Detached, New, Transient, Removed)
+Many to Many
+Standalone config + lookup
+Transaction Management
+Test entities using DBUnit etc.
+
+JMS
+Sending XML message over JMS
+JMS versions/ specification
+Message selector
+Message expiry
+Transaction types
+Message Redelivery
+Message Acknowledgement
+Pool size management
+Transaction Timeout
+JMS Reply To
+Reliability v/s Persistence
+listener deployment
+
+JUNIT
+PowerMockito v/s Mockito
+
+EJB
+Nested Transaction EJB3 v/s Spring
+EJB v/s Spring
+
+JSF
+Debugging JSF phases
+Managed bean v/s Backing bean
+Lifecycle of JSF
+Converter and Validator in JSF
+JSF v/s GWT
+
+DS+Algo
+Collections v/s legacy classes
+Collections.binarySearch
+Map comparison
+List comparison
+Internal workings - List, Set, Map
+Map - rehashing, 
+
+Concurrent
+Executor f/w
+Kind of thread pools
+volatile v/s atomic
+
+Java
+volatile
+http://javarevisited.blogspot.co.uk/2012/03/10-object-oriented-design-principles.html
+equals and hashcode
+Ice Cream Parlour design
+Shopping Cart discount design
+Singleton, Factory, Strategy, Decorator, Flyweight, template, State, Composite, Proxy
+Execute a program to check heap state with all 4 GC algorithms
+
+REST
+application config to setup
+error handling
+API exposure
+
+@Varargs vs Overloading
+According to (JLS 15.2.2), there are 3 phases used in overload resolution: First phase performs overload resolution without permitting boxing or unboxing conversion, Second phase performs overload resolution while allowing boxing and unboxing and Third phase allows overloading to be combined with variable arity methods, boxing, and unboxing. If no applicable method is found during these phases, then ambiguity occurs.
+
+@Array[Integer] - toString()
+Arrays.toString(intarray) prints elements.toString comma separated.
+
+@Overriding static method
+Overriding depends on having an instance of a class. The point of polymorphism is that you can subclass a class and the objects implementing those subclasses will have different behaviors for the same methods defined in the superclass (and overridden in the subclasses). A static method is not associated with any instance of a class so the concept is not applicable. Hence no overriding happens for static method
+
+@Handling Multiple Exception types in catch block
+In releases prior to Java SE 7, it is difficult to create a common method to eliminate the duplicated code because the variable ex has different types. The following example, which is valid in Java SE 7 and later, eliminates the duplicated code:
+
+catch (IOException|SQLException ex) {
+    logger.log(ex);
+    throw ex;
+}
+The catch clause specifies the types of exceptions that the block can handle, and each exception type is separated with a vertical bar (|).
+Note: If a catch block handles more than one exception type, then the catch parameter is implicitly final. In this example, the catch parameter ex is final and therefore you cannot assign any values to it within the catch block.
+
+@Order of finally and catch block
+Finally block can only appear after the catch block if a catch block is present for the corresponding try block.
+
+
+@Exception broadening
+It means that if a method declares to throw a given exception, the overriding method in a subclass can only declare to throw that exception or its subclass. For example:
+
+class A {
+   public void foo() throws IOException {..}
+}
+
+class B extends A {
+   @Override
+   public void foo() throws SocketException {..} // allowed
+
+   @Override
+   public void foo() throws SQLException {..} // NOT allowed
+}
+SocketException extends IOException, but SQLException does not.
+
+This is because of polymorphism:
+
+A a = new B();
+try {
+    a.foo();
+} catch (IOException ex) {
+    // forced to catch this by the compiler
+}
+If B had decided to throw SQLException, then the compiler could not force you to catch it, because you are referring to the instance of B by its superclass - A. On the other hand, any subclass of IOException will be handled by clauses (catch or throws) that handle IOException
+
+The rule that you need to be able to refer to objects by their superclass is the Liskov Substitution Principle.
+
+Since unchecked exceptions can be thrown anywhere then they are not subject to this rule. You can add an unchecked exception to the throws clause as a form of documentation if you want, but the compiler doesn't enforce anything about it.
+
+@Overloading v/s Overriding - Child Class Example
+Java Tutorials: Overloading is compile-time binding
+Most beginners in Java get confused between Overloading and Overriding. One should understand that overloading is compile-time binding whereas overriding is runtime binding.
+
+Have a look at the following example. There are three classes - Base, Derived and Test. As the name indicates class Derived extends class Base. The class Test has two overloaded methods with name methodA, with parameters Base and Derived respectively.
+
+class Base{
+}
+
+class Derived extends Base{
+}
+
+class Test{
+  public void methodA(Base b){
+    System.out.println("Test.methodA(Base)");
+  }
+  public void methodA(Derived b){
+    System.out.println("Test.methodA(Derived)");
+  }
+
+  public static void main(String []args){
+    Test t = new Test();
+    Base b = new Base();
+    Base d = new Derived();
+
+    t.methodA(b);
+    t.methodA(d);
+
+  }
+}
+
+What is the output?
+If your answer is
+Test.methodA(Base)
+Test.methodA(Derived)
+
+This is wrong
+
+For your surprise the answer is wrong. The actual output is
+
+Test.methodA(Base)
+Test.methodA(Base)
+
+Surprised?
+
+This is because overloading is compile-time binding. When the compiler sees the line t.methodA(d);
+It checks the data type of 'd', which is declared as 'Base'. So it looks for the method, methodA(Base) and binds the call to this method and hence the result.
+
+Let us look at another common problem. When the programmers think to override the 'equals', but endup really overloading the method, there by creating some unforeseen problems.
+
+Have a look at the following code, and say whether the equals method and the hashCode are implemented in the correct way?
+
+public class EqualsOverloadTest {
+
+  String id;
+
+  public EqualsOverloadTest(String id){
+    this.id = id;
+  }
+
+  public boolean equals(EqualsOverloadTest other){
+    return (other!=null) && this.id.equals(other.id);
+  }
+
+  public int hashCode() {
+    return id.hashCode();
+  }
+
+}
+
+In the first go, anyone will say the equals method is implemented correctly.
+It follows all the constraints for the 'equals' method, and also implements the 'hashCode()' method following the same contract. But, if you look closer, you fill notice that, the 'equals' method really overloads the Object.equals(Object) method, instead of over loading it.
+
+To prove that this won't work, let me give a simple program. In the main method, we are creating two EqualsOverloadTest objects with the same id. The two objects are added into the Set. Then we are printing the size of the set.
+public static void main(String[] args) {
+EqualsOverloadTest first = new EqualsOverloadTest("123");
+EqualsOverloadTest second =
+new EqualsOverloadTest(new String("123"));
+
+System.out.println(first.equals(second));
+
+Set set = new HashSet();
+set.add(first);
+set.add(second);
+System.out.println(set.size());
+}
+
+We will expect the size of the Set to be '1' since the two Objects are equal. But it will print as '2'.
+This is because we didn't override the 'equals' method. Whereas the first check with the equals method returned true, because we called the method as equals(EqualsOverloadTest), hence the proper method was called. But withing the set, it called the method equals(Object), which is not implemented, so uses the Object.equals(Object), which really checks whether they both are same instance or not. Hence we get an unexpected behaviour.
+
+Summary:
+Overloading is a static or compile-time binding and Overriding is dynamic or run-time binding.
+
+@How to define immutable object
+Don't provide "setter" methods — methods that modify fields or objects referred to by fields.
+Make all fields final and private.
+Don't allow subclasses to override methods. The simplest way to do this is to declare the class as final. A more sophisticated approach is to make the constructor private and construct instances in factory methods.
+If the instance fields include references to mutable objects, don't allow those objects to be changed:
+Don't provide methods that modify the mutable objects.
+Don't share references to the mutable objects. Never store references to external, mutable objects passed to the constructor; if necessary, create copies, and store references to the copies. Similarly, create copies of your internal mutable objects when necessary to avoid returning the originals in your methods.
+
+@How to know about the .class file
+1. class file in java is generated when you compile .java file using any Java compiler like Sun's javac which comes along JDK installation and can be found in JAVA_HOME/bin directory.
+
+2. class file contains byte codes. byte codes are special platform independent instruction for Java virtual machine. bytecode is not a machine language and mere instruction to JVM. since every machine or processor e.g. INTEL or AMD processor may have different instruction for doing same thing, its left on JVM to translate bytecode into machine instruction and by this way java achieves platform independence.
+
+3. class file of inner class contains $ in there name. So if a Java source file contains two classes, one of them is inner class than java compiler will generate two class file. separate class file for top level and inner class. you can distinguish them by looking at there name. Suppose you have top level class as "Hello" and inner class as "GoodBye" then java compiler will generate two class file:
+
+Hello.class
+Hello$GoodBye.class
+
+Hello$GoodBye.class is a class file for inner class. whose name is in format of top-class$inner-class.
+
+4. You can look bytecode of class file using javap command. javap command can also display method and field information from .class file. see my post how to decompile .class file in Java for more details.
+
+5. class file format is subject to change and its changed to support new feature introduced in Java 1.5. In general every java compiler and JRE comes with supported version of .class file format and you can not run a .class file which is in higher version of those supported by JRE. this often result in java.lang.UnsupportedClassVersion. class file has two version major and minor which is included inside class file. See my post Bad version number in .class file for more details.
+
+6. .class file in java is identified by a magic number in header which is a 4 byte CA FE BA BE ( in hex). which is the first element in .class file, followed by major and minor versions of class file
+
+The types u1, u2, and u4 represent an unsigned one-, two-, or four-byte quantity, respectively. In the Java SE platform, these types may be read by methods such as readUnsignedByte, readUnsignedShort, and readInt of the interface java.io.DataInput.
+ClassFile {
+    u4             magic;
+    u2             minor_version;
+    u2             major_version;
+    u2             constant_pool_count;
+    cp_info        constant_pool[constant_pool_count-1];
+    u2             access_flags;
+    u2             this_class;
+    u2             super_class;
+    u2             interfaces_count;
+    u2             interfaces[interfaces_count];
+    u2             fields_count;
+    field_info     fields[fields_count];
+    u2             methods_count;
+    method_info    methods[methods_count];
+    u2             attributes_count;
+    attribute_info attributes[attributes_count];
+}
+
+
 
