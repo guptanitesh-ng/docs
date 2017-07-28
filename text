@@ -7,10 +7,7 @@ REST wrapper classes
 Load balancing for REST URI
 Error message replay
 
-Unit testing enterprise components
-Multiple applications in a container
-
-Maven
+MAVEN
 profile
 multimodule
 archetype
@@ -69,7 +66,6 @@ Kind of thread pools
 volatile v/s atomic
 
 Java
-volatile
 http://javarevisited.blogspot.co.uk/2012/03/10-object-oriented-design-principles.html
 equals and hashcode
 Ice Cream Parlour design
@@ -274,5 +270,57 @@ ClassFile {
     attribute_info attributes[attributes_count];
 }
 
+@Unit testing enterprise components
+Unit testing of Java EE 6 applications is no different than testing Java Platform, Standard Edition (Java SE). Java EE 6 components are just annotated classes. You should not treat them in a special way; instead, focus on the verification of the business logic.
+
+Arquillian seeks to minimize the burden on the developer to carry out integration testing by handling all aspects of test execution, including:
+
+managing the lifecycle of the container (start/stop),
+bundling the test class with dependent classes and resources into a deployable archive,
+enhancing the test class (e.g., resolving @Inject, @EJB and @Resource injections),
+deploying the archive to test (deploy/undeploy) and
+capturing results and failures.
+
+@Multiple applications in a container
+Two ideas: 
+1. Multiple war in a ear - user APP-INF/ lib, specify the path in application.xml
+2. Multiple ear - Put the libs on system classpath e.g. in JBOSS_HOME/server/default/lib, deployed as a shared library in Weblogic
+
+@Spring shared context between multiple webapp
+Assuming that spring configuration consists of beans specific to the web application concern (validators, controllers), to have bunch of beans share a single spring context, we use the 'locatorFactorySelector' and 'parentContextKey'. We simply add the following into our web.xml(s)
+<context-param>
+    <param-name>locatorFactorySelector</param-name>
+    <param-value>classpath:common-beans.xml</param-value>
+</context-param>
+The above would mean that you would have a file called common-beans.xml in the classpath for the web application, which has the following bean configured;
+<bean id="commonContext" class="org.springframework.context.support.ClassPathXmlApplicationContext"> 
+    <constructor-arg> 
+        <list> 
+            <value>classpath:service-beans.xml</value> 
+        </list> 
+    </constructor-arg> 
+</bean>
 
 
+PowerMockito v/s Mockito
+Szczepan Faber is the founder of the Mockito project. PowerMock was founded by Johan Haleby and Jan Kronquist.
+Mockito is available under MIT License. PowerMock is available under Apache license 2.0.
+Mockito does not include specific language characteristics like
+constructors or static methods for mocking.
+PowerMock offers constructors and static methods to Mockito and other frameworks,
+through its individual classloader and bytecode management.
+Mockito does not require ‘@RunWith’ annotation and base
+test class, while performing tests in suite.
+PowerMock requires both ‘@RunWith’ annotation and a base test class for testing a
+suite.
+Mockito does not support mocking of constructors.
+PowerMock supports mocking of constructors and also supports mocking of (i) final (ii)
+static (iii) native and (iv) private methods.
+Mockito does not support mocking of ‘new’-ed objects. PowerMock supports mocking of ‘new’-ed objects.
+Mockito contains a jar file in the classpath for supporting
+mocking APIs.
+PowerMock is a Mockito API.
+Mockito does not require any codes to be executed before a
+test.
+PowerMock includes ‘preparation for test’ codes.
+Mockito does not support mocking of enum data types. PowerMock supports mocking of enum data types.
