@@ -1,12 +1,3 @@
-JPA Standalone -  performance, query correctness
-XML Generator
-SVN Tagging utility
-Service Virtualization
-REST invoker from main
-REST wrapper classes
-Load balancing for REST URI
-Error message replay
-
 MAVEN
 profile
 multimodule
@@ -15,35 +6,10 @@ phases/lifecycle
 test, code coverage
 static code analysis
 
-ORM
-Why JPA
-ORM v/s JDBC
-Entity States -(Persistent, Detached, New, Transient, Removed)
-Many to Many
-Standalone config + lookup
-Transaction Management
-Test entities using DBUnit etc.
-
-JMS
-Sending XML message over JMS
-JMS versions/ specification
-Message selector
-Message expiry
-Transaction types
-Message Redelivery
-Message Acknowledgement
-Pool size management
-Transaction Timeout
-JMS Reply To
-Reliability v/s Persistence
-listener deployment
-
-JUNIT
-PowerMockito v/s Mockito
-
-EJB
-Nested Transaction EJB3 v/s Spring
-EJB v/s Spring
+REST
+application config to setup
+error handling
+API exposure
 
 JSF
 Debugging JSF phases
@@ -66,17 +32,19 @@ Kind of thread pools
 volatile v/s atomic
 
 Java
-http://javarevisited.blogspot.co.uk/2012/03/10-object-oriented-design-principles.html
-equals and hashcode
 Ice Cream Parlour design
 Shopping Cart discount design
-Singleton, Factory, Strategy, Decorator, Flyweight, template, State, Composite, Proxy
 Execute a program to check heap state with all 4 GC algorithms
 
-REST
-application config to setup
-error handling
-API exposure
+@Contribution
+JPA Standalone -  performance, query correctness
+XML Generator
+SVN Tagging utility
+Service Virtualization
+REST invoker from main
+REST wrapper classes
+Load balancing for REST URI
+Error message replay
 
 @Varargs vs Overloading
 According to (JLS 15.2.2), there are 3 phases used in overload resolution: First phase performs overload resolution without permitting boxing or unboxing conversion, Second phase performs overload resolution while allowing boxing and unboxing and Third phase allows overloading to be combined with variable arity methods, boxing, and unboxing. If no applicable method is found during these phases, then ambiguity occurs.
@@ -324,3 +292,247 @@ Mockito does not require any codes to be executed before a
 test.
 PowerMock includes ‘preparation for test’ codes.
 Mockito does not support mocking of enum data types. PowerMock supports mocking of enum data types.
+
+@Design Principles - additional
+DRY
+Encapsulate what changes
+Favor composition over inheritance
+Program to Interface
+Delegation
+
+@Nested Transaction also 9Spring v/s EJB Transaction Management)
+PROPAGATION_REQUIRES_NEW starts a new, independent "inner" transaction for the given scope. This transaction will be committed or rolled back completely independent from the outer transaction, having its own isolation scope, its own set of locks, etc. The outer transaction will get suspended at the beginning of the inner one, and resumed once the inner one has completed.
+
+Such independent inner transactions are for example used for id generation through manual sequences, where the access to the sequence table should happen in its own transactions, to keep the lock there as short as possible. The goal there is to avoid tying the sequence locks to the (potentially much longer running) outer transaction, with the sequence lock not getting released before completion of the outer transaction.
+
+PROPAGATION_NESTED on the other hand starts a "nested" transaction, which is a true subtransaction of the existing one. What will happen is that a savepoint will be taken at the start of the nested transaction. �f the nested transaction fails, we will roll back to that savepoint. The nested transaction is part of of the outer transaction, so it will only be committed at the end of of the outer transaction.
+
+Nested transactions essentially allow to try some execution subpaths as subtransactions: rolling back to the state at the beginning of the failed subpath, continuing with another subpath or with the main execution path there - all within one isolated transaction, and not losing any previous work done within the outer transaction.
+
+For example, consider parsing a very large input file consisting of account transfer blocks: The entire file should essentially be parsed within one transaction, with one single commit at the end. But if a block fails, its transfers need to be rolled back, writing a failure marker somewhere. You could either start over the entire transaction every time a block fails, remembering which blocks to skip - or you mark each block as a nested transaction, only rolling back that specific set of operations, keeping the previous work of the outer transaction. The latter is of course much more efficient, in particular when a block at the end of the file fails.
+
+@Spring vs EJB
+Use Spring if:
+  - Your application requires a lot of configuration beyond gluing together components and resources.
+  - You need advance AOP feathers.
+ 
+Use EJB 3 If:
+  - Your application is very stateful.
+  - Standardization is an important consideration.
+  - Vendor Independence
+  
+@ORM v/s JDBC
+ORM speeds up development. It manages the data access while you simply code using POJO like classes. Unlike ORM, JDBC will require you quite some time of SQL coding. However, ORM requires quite a lot of mapping.
+
+Speaking about performance JDBC is always faster than ORM, unless your application uses several times the same data already cached by the ORM.
+
+@Why JPA?
+Is supported out of the box by an JEE compliant application server. Other arguments are more in favour of using ORM.
+
+@Entity States -(Persistent, Detached, New, Removed)
+New (Transient)
+A newly created object that hasn’t ever been associated with a Hibernate Session (a.k.a Persistence Context) and is not mapped to any database table row is considered to be in the New (Transient) state.
+
+To become persisted we need to either explicitly call the EntityManager#persist method or make use of the transitive persistence mechanism.
+Persistent (Managed)
+A persistent entity has been associated with a database table row and it’s being managed by the current running Persistence Context. Any change made to such entity is going to be detected and propagated to the database (during the Session flush-time). With Hibernate, we no longer have to execute INSERT/UPDATE/DELETE statements. Hibernate employs a transactional write-behind working style and changes are synchronized at the very last responsible moment, during the current Session flush-time.
+Detached
+Once the current running Persistence Context is closed all the previously managed entities become detached. Successive changes will no longer be tracked and no automatic database synchronization is going to happen.
+
+To associate a detached entity to an active Hibernate Session, you can choose one of the following options:
+
+Reattaching
+Hibernate (but not JPA 2.1) supports reattaching through the Session#update method.
+
+A Hibernate Session can only associate one Entity object for a given database row. This is because the Persistence Context acts as an in-memory cache (first level cache) and only one value (entity) is associated to a given key (entity type and database identifier).
+
+An entity can be reattached only if there is no other JVM object (matching the same database row) already associated to the current Hibernate Session.
+Merging
+The merge operaration is going to copy the detached entity state (source) to a managed entity instance (destination). If the merging entity has no equivalent in the current Session, one will be fetched from the database.
+
+The detached object instance will continue to remain detached even after the merge operation.
+Removed
+Although JPA demands that managed entities only are allowed to be removed, Hibernate can also delete detached entities (but only through a Session#delete method call).
+
+A removed entity is only scheduled for deletion and the actual database DELETE statement will be executed during Session flush-time.
+
+@Standalone config + lookup
+public class Main {
+    private static final String PERSISTENCE_UNIT_NAME = "todos";
+    private static EntityManagerFactory factory;
+
+    public static void main(String[] args) {
+        factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        EntityManager em = factory.createEntityManager();
+        // read the existing entries and write to console
+        Query q = em.createQuery("select t from Todo t");
+        List<Todo> todoList = q.getResultList();
+        for (Todo todo : todoList) {
+            System.out.println(todo);
+        }
+        System.out.println("Size: " + todoList.size());
+
+        // create new todo
+        em.getTransaction().begin();
+        Todo todo = new Todo();
+        todo.setSummary("This is a test");
+        todo.setDescription("This is a test");
+        em.persist(todo);
+        em.getTransaction().commit();
+
+        em.close();
+    }
+}
+
+@Testing JPA/DAO layer
+One option is to use in memory DB, other option is to use DBUnit which takes care of resetting the DB. Another choice could be to mock JPA classes e.g. EntityManager.
+
+Transaction Management
+Container or Bean
+JTA or Resource_LOCAL
+You can control when a rollback is automatic or not; it only happens when the exception is either;
+
+- a runtime exception
+- an EjbException
+- any other exception marked with the annotation @ApplicationException
+
+With the annotation you can fully control if an automatic rollback should happen or not on your own exceptions. You could declare a runtime exception for example, but not have it rollback the transaction.
+
+
+@ApplicationException(rollback=false)
+public class MyException extends RuntimeException {
+
+  ...
+}
+
+@Multiple persistence units
+You know how it is with manuals, articles and tutorials. Everything is fine when the basics are covered. But then you go out into the real world and you want to actually apply the material. Then you take the next step, pushing the technology beyond the scope of the manual, the articles and the tutorials because the more difficult problems are always forgotten by the authors as if you will never face them. But of course you do, programming is not easy.
+
+The interesting topic when it comes to transactions is when you go beyond one persistence unit into multiple persistence units, that may target different databases. JTA can certainly handle that, and thus so can EJB technology. It doesn't just work out of the box though.
+
+First of all, you need a very specific type of datasource: an XA datasource. To keep it short and simple: an XA datasource is specifically designed to take part in a "two phase" transaction, or a transaction that targets multiple resources. Most established database implementations support XA datasources through their drivers.
+
+With the XA datasources in place, JTA is all setup to deal with you throwing multiple persistence units at it. What you shouldn't do however is to try and force two persistence units onto the same EJB. In stead, separate.
+
+
+@Stateless
+public class MyFirstEjbBean implements MyFirstEjb {
+
+  @PersistenceContext(name="first-pu")
+  private EntityManager em;
+
+  public void doSomething(){
+
+  }
+}
+
+
+
+@Stateless
+public class MySecondEjbBean implements MySecondEjb {
+  
+  @PersistenceContext(name="second-pu")
+  private EntityManager em;
+
+  public void doSomething(){
+
+  }
+}
+
+
+
+So far so good, two EJBs with two different persistence units. What will work with XA datasources and fail without it is this:
+
+
+@Stateless
+public class MyThirdEjbBean implements MyThirdEjb {
+  
+  @EJB
+  private MyFirstEjb first;
+
+  @EJB
+  private MySecondEjb second;
+
+
+  public void reallyDoSomething(){
+    first.doSomething();
+    second.doSomething();
+  }
+}
+
+
+Notice how in one business method call the transactions are mixed and mashed. But with XA datasources and JTA, this can work.
+
+Just note that as soon as you get into the realm of XA datasources and distributed transactions, when something blows up you'll probably get the most vague exceptions you'll ever encounter with exceptions yelling TWO PHASE COMMIT FAILURE ABORT errors at you. Shrug it off and don't be intimidated however, the truth is usually as simple as a query borking somewhere and the root cause will be hidden somewhere in the logged stacktraces. But it may seem like the container is on the brink of destruction when you first have to deal with this.
+
+@JMS Message Data Types
+The JMS API defines five types of message body:
+
+Stream - A StreamMessage object's message body contains a stream of primitive values in the Java programming language ("Java primitives"). It is filled and read sequentially.
+Map - A MapMessage object's message body contains a set of name-value pairs, where names are String objects, and values are Java primitives. The entries can be accessed sequentially or randomly by name. The order of the entries is undefined.
+Text - A TextMessage object's message body contains a java.lang.String object. This message type can be used to transport plain-text messages, and XML messages.
+Object - An ObjectMessage object's message body contains a Serializable Java object.
+Bytes - A BytesMessage object's message body contains a stream of uninterpreted bytes. This message type is for literally encoding a body to match an existing message format. In many cases, it is possible to use one of the other body types, which are easier to use. Although the JMS API allows the use of message properties with byte messages, they are typically not used, since the inclusion of properties may affect the format.
+Of those five, only two are useful: Bytes and Text messages. The three others have their own issues1 but today's rant is about ObjectMessage.
+
+Architectural Issues
+One of the advantage of using messaging system is loose coupling. The producers and consumers of a destination does not need to know each other or be online at the same time to exchange messages. They only need to agree on the data sent in the message.
+
+By using an ObjectMessage, the type of the Java object is their agreement. This means that both sides MUST be able to understand the object and its whole graph type. You are losing one degree of abstraction by using an ObjectMessage, the consumer(s) of this message must know the implementation type of the payload and have all the classes required to deserialize it. This introduces a strong coupling between producers and consumers since they now must share a common set of classes (which grows with the complexity of the payload type).
+
+@Transaction Management, Timeout, Acknowledge Mode
+For a message-driven bean's message listener methods (or interface), only the REQUIRED and NOT_SUPPORTED values may be used. The default is NOT_SUPPORTED. The container always starts a new transaction before calling onMessage(). If another method is called from onMessage(), the container passes along the current transaction context.
+
+The timeout configuration is server specific either using activation config property or through annotation.
+
+In transacted sessions (see Using JMS API Local Transactions), acknowledgment happens automatically when a transaction is committed. If a transaction is rolled back, all consumed messages are redelivered.
+In nontransacted sessions, when and how a message is acknowledged depend on the value specified as the second argument of the createSession method. The three possible argument values are as follows:
+Session.AUTO_ACKNOWLEDGE: The session automatically acknowledges a client’s receipt of a message either when the client has successfully returned from a call to receive or when the MessageListener it has called to process the message returns successfully.
+A synchronous receive in an AUTO_ACKNOWLEDGE session is the one exception to the rule that message consumption is a three-stage process as described earlier. In this case, the receipt and acknowledgment take place in one step, followed by the processing of the message.
+Session.CLIENT_ACKNOWLEDGE: A client acknowledges a message by calling the message’s acknowledge method. In this mode, acknowledgment takes place on the session level: Acknowledging a consumed message automatically acknowledges the receipt of all messages that have been consumed by its session. For example, if a message consumer consumes ten messages and then acknowledges the fifth message delivered, all ten messages are acknowledged.
+Note - In the Java EE platform, a CLIENT_ACKNOWLEDGE session can be used only in an application client, not in a web component or enterprise bean.
+Session.DUPS_OK_ACKNOWLEDGE: This option instructs the session to lazily acknowledge the delivery of messages. This is likely to result in the delivery of some duplicate messages if the JMS provider fails, so it should be used only by consumers that can tolerate duplicate messages. (If the JMS provider redelivers a message, it must set the value of the JMSRedelivered message header to true.) This option can reduce session overhead by minimizing the work the session does to prevent duplicates.
+
+@Message selector
+The MDB consumer can specify using the activation config property the message selector string as an SQL92 expression e.g. NewsType = ’Sports’ OR NewsType = ’Opinion’.
+A POJO receiver can be created using additional argument e.g. MessageConsumer consumer = session.createConsumer(destination, "OS = 'LINUX'"); for selecting message.
+The message producer can call the setProprty method to set the property name and value.
+
+@Persistent and Durable / Reliable
+Persistent apply to messages while durable apply to subscriptions.
+Queues don’t have durable/ non-durable distinction because consumer always gets a durable subscription.
+For queues:
+Persistent : Message will be saved on disk and sent later if consumer is inactive.
+Non-persistent : Messages will be saved in-memory and sent later if consumer is inactive. But they will not survive a broker re-start.
+For topics:
+Persistent & Durable : Message will be saved both on-disk and in-memory and sent later if subscriber is inactive.
+Persistent  & Non-Durable : Message will not be saved either in-memory or on disk and any inactive subscriber at the moment of message receipt at broker will not receive the message.
+Non-persistent & Durable : Message will be saved in-memory and sent later if subscriber is inactive. So it will not survive a broker re-start.
+Non-persistent & Non-Durable : Message will not be saved either in-memory or on disk and any inactive subscriber at the moment of message receipt at broker will not receive the message. Similar to Persistent & Non-Durable case.
+
+@Message expiry
+Using setTimeToLive method of MessageProducer. Also note that the method setJMSExpiration of Message is not meant for client usage instead it is used by the provider to set the expiration time.
+
+@JMS ReplyTo
+The JMS API allows messages to declare a replyTo Destination instance. (i.e. the superclass of Queue, Topic). A service could then send a reply message to the sender using this queue.
+Scenario 1
+In this scenario the Destination is pre-configured and hence proven to work. There is not much value to set this destination as a value for JMSReplyTo header as the receiver might already know about the existence of this pre-configured destination.
+
+Scenario 2
+In this scenario the sender creates a temporary Destination and receiver will know about this only by calling getJMSReplyTo() method on the received Message. This kind of establishes a private channel between sender and receiver. Read this nice article on pros and cons of temporary destinations.
+
+Sample code
+Queue tempQueue = qSession.createTemporaryQueue();
+TextMessage request = qSession.createTextMessage();
+request.setJMSReplyTo(tempQueue);
+QueueReceiver qReceiver = qSession.createReceiver(tmpQueue);
+Message response = qReceiver.receive();
+
+@JMS2.0 new features
+Delivery Delay - You can now specify a delivery delay on a message. The JMS provider will not deliver the message until after the specified delivery delay has elapsed.
+Multiple Consumers Allowed on the Same Topic Subscription - In JMS 1.1, a subscription on a topic was not permitted to have more than one consumer at a time. This meant that the work of processing messages on a topic subscription could not be shared among multiple threads, connections, or Java Virtual Machines (JVMs), thereby limiting the scalability of the application. This restriction has been removed in JMS 2.0 by the introduction of a new kind of topic subscription called a shared subscription.
+Sending Messages Asynchronously - Another new feature of JMS 2.0 is the ability to send a message asynchronously. This feature is available for applications running in Java SE or the Java EE application client container. It is not available to applications that run in the Java EE Web or EJB container. JMS 2.0 introduces the ability to perform an asynchronous send. When a message is sent asynchronously, the send method sends the message to the server and then returns control to the application without waiting for a reply from the server. Instead of being blocked unproductively while the JMS client waits for a reply, the application can do something useful, such as sending a further message or performing some processing. When a reply is received back from the server to indicate that the message has been received by the server and persisted, the JMS provider notifies the application by invoking the callback method onCompletion on an application-specified CompletionListener object.
+JMSXDeliveryCount - JMS 2.0 allows applications that receive a message to determine how many times the message has been redelivered. This information can be obtained from the message property JMSXDeliveryCount:
+int deliveryCount = message.getIntProperty("JMSXDeliveryCount");
+JMSXDeliveryCount is not a new property; it was defined in JMS 1.1. However, in JMS 1.1, it was optional for a JMS provider to actually set it, which meant application code that used it was not portable. In JMS 2.0, it becomes mandatory for JMS providers to set this property, allowing portable applications to make use of it.
+MDBConfigurationProperties and simplified JMS API based on three classes JMSContext, JMSProducer and JMSConsumer.
