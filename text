@@ -1,3 +1,39 @@
+
+1)      What is Concurrent # MAP
+2)      Benefits of Concurrent #Map over #MAP.
+Exception Concurrent #
+Each segment works as #MAP at same time
+One segment can lock instead whole locking
+16 segments, each thread will lock it self
+3)      How segment get locked Read and Write?
+ 
+4)      1 Million numbers in Array .. how to short this Array?
+Tree Map
+5)      Revers word in String.
+6)      SQL quesries.. like find max salary form each department
+7)      What are different join?  Then specific join.. outer join
+8)      Diff between procedure and functions
+9)      Out of Memory exception? How do you proceed for production issue?
+10)   How to get the thread dump?
+11)   Already sorted Array. How to find  specific  number?--- Binary Search
+12)   Time complexity? O of N type
+13)   Ina file some words, you need to print the frequency of word.
+14)   How to create new list?
+15)   Diff bet’n string builder and string buffer? Not thread safe string builder.. buffer is thread safe
+16)   Multi threading? Two publishers even and odd number. Make a program to print them in order  1,3,5,7,9  other other 0,2,4,6,8,10
+17)   How to create new set?  Can you instantiate like set s = new set()? 
+18)   SQL query: highest salary from department
+19)   Two tables: find the common records between two tables: inner join
+20)    How you write  Right outer join? Is it possible?   Write syntex of Left outer join  and Right outer join.. ORACLE.. Right outer joine where it will be located ..? next to Table 1 or table2?
+21)    Diff. b/w Abstract Class & Interface. Can we live without Interface?
+22)   How does a hashmap works?
+23)   If all elemnts having same hash code then how hashmap will store it.
+24)   How to reduce the time complexity of O(n), if all elements are having the same hash code. We are free to choose any data structure.
+25)   Sql Query - Removing duplicate records from table.
+                         - no. of emp. acc. to gender whose DOB is in b/w 1980-2000.
+                         - All the emp. having addresses.
+                         - All employees having salary higher than average salary.
+                         
 MAVEN
 profile
 multimodule
