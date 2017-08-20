@@ -1,3 +1,72 @@
+Questions from Multithreading- 
+•	What are the new features introduced in java 6 for collection framework to have a better synchronization ConcurrentNavigableMap(its advantages), CopyOnWriteArrayList, CopyOnWrite-ArraySe is expected. It also comes under collection part. 
+•	Callable and Future.
+•	Thread Synchronization – expected the working of synchronized block and methods
+•	Static vs Non-Static synchronization / locking.
+•	All methods of thread.  Join, wait Notify, Notify all are mostly preferred.
+•	Use of Volatile keyword
+•	Immutability of objects – All aspects of immutable class and defensive copying.
+•	Real life scenarios where thread priority, concurrency and thread pooling is asked in tricky manner
+Questions in collection – 
+•	Why to have an immutable class as a key in maps. 
+•	Internal working of a Map like bucket, indexed table, hashcode, load factor, initial capacity, Null members etc.
+•	Difference between ArrayList, linkedlist and  Vector
+•	Treeset, Hashset differences and internal functionality.
+•	Use of Collections (class) utility.
+•	Use of sorting techniques like comparable, comparator etc.
+•	Why to have equal and hashcode method overrides. 
+•	 what is the use of final keyword. 
+•	What does below statement imply.(Internally how does it work with and without final keyword )
+  final Emp e= new Emp();
+
+why do we need to create immutable class. Why is String immutable?
+ 
+          2 tables emp and dept. Retrieve number of employees per department.
+
+Questions from java.lang.String
+•	StringBuilder and StringBuffer usage
+•	Scenario based questions like 
+o	There is a file with some text in it. How to count the total no of Lines, words it.
+o	How to count the repeated words in a file.
+•	String formatting and immutable aspect of String
+JDBC
+•	Difference between statements of JDBC.
+•	Advantage of having  Hibernate over JDBC and also possible sql injection security attacks. 
+•	Mostly Callable statement, Scrollable result-set transaction management etc.
+Miscellaneous:
+•	Volatile and transient
+•	Atomic variables in synchronization. 
+•	DateTime, Gregorian Calendar etc.
+Questions from Spring
+•	What is IOC and DI? 
+•	What are the Modules you worked till now- MVC being the important- explain the flow from first request to response serving. 
+•	Integration of REST and Spring.
+•	Integration of Spring and Hibernate
+•	Spring Security module- Authentication flow. 
+•	Spring AOP- flow and use.
+Questions from database- 
+•	Expect a very basic question on Joins.
+•	Primary, Unique and foreign keys
+•	Difference in procedure and function. 
+•	Use of triggers.
+•	Scenario based- How you will have a periodic back up of tables. 
+
+A sample List of questions asked by client during an interview:
+1. Difference between Array list and Linkedlist?
+2. Please explain any difficult situation in your project and how to handle?
+3. Explain Serialization and Deserialization?
+4. Scenario: Suppose I have your CV and i need to calculate total count of JAVA word and total count of world in your CV how to do it?
+5. Explain Singleton pattern?
+6. Internal working of HashMap?
+7. How to calculate total count of users are visited to your website?
+8. How to do it table backup (reflection) on particular time in SQL server? 
+9. Explain Generic feature?
+10. Explain Threading Pool in Executor framework?
+11. Scenario: Suppose 10 threads process parallel if one thread is stop because of some exception all threads will stop automatically also if same thread is start all threads will be start how to do it?
+12. Scenario: Suppose at time of xml parsing if you read name(in short form) ‘kk’ then in database you will write Kiran kumar how to do it?
+13. Difference between DOM and SAX parser?
+14. Why we will go with Hibernate if Jdbc already available?
+15. Explain second level Cache?
 
 1)      What is Concurrent # MAP
 2)      Benefits of Concurrent #Map over #MAP.
@@ -33,26 +102,6 @@ Tree Map
                          - no. of emp. acc. to gender whose DOB is in b/w 1980-2000.
                          - All the emp. having addresses.
                          - All employees having salary higher than average salary.
-                         
-MAVEN
-profile
-multimodule
-archetype
-phases/lifecycle
-test, code coverage
-static code analysis
-
-REST
-application config to setup
-error handling
-API exposure
-
-JSF
-Debugging JSF phases
-Managed bean v/s Backing bean
-Lifecycle of JSF
-Converter and Validator in JSF
-JSF v/s GWT
 
 DS+Algo
 Collections v/s legacy classes
@@ -72,6 +121,19 @@ Ice Cream Parlour design
 Shopping Cart discount design
 Execute a program to check heap state with all 4 GC algorithms
 
+MAVEN
+profile
+multimodule
+archetype
+phases/lifecycle
+test, code coverage
+static code analysis
+
+REST
+application config to setup
+error handling
+API exposure
+
 @Contribution
 JPA Standalone -  performance, query correctness
 XML Generator
@@ -82,493 +144,9 @@ REST wrapper classes
 Load balancing for REST URI
 Error message replay
 
-@Varargs vs Overloading
-According to (JLS 15.2.2), there are 3 phases used in overload resolution: First phase performs overload resolution without permitting boxing or unboxing conversion, Second phase performs overload resolution while allowing boxing and unboxing and Third phase allows overloading to be combined with variable arity methods, boxing, and unboxing. If no applicable method is found during these phases, then ambiguity occurs.
-
-@Array[Integer] - toString()
-Arrays.toString(intarray) prints elements.toString comma separated.
-
-@Overriding static method
-Overriding depends on having an instance of a class. The point of polymorphism is that you can subclass a class and the objects implementing those subclasses will have different behaviors for the same methods defined in the superclass (and overridden in the subclasses). A static method is not associated with any instance of a class so the concept is not applicable. Hence no overriding happens for static method
-
-@Handling Multiple Exception types in catch block
-In releases prior to Java SE 7, it is difficult to create a common method to eliminate the duplicated code because the variable ex has different types. The following example, which is valid in Java SE 7 and later, eliminates the duplicated code:
-
-catch (IOException|SQLException ex) {
-    logger.log(ex);
-    throw ex;
-}
-The catch clause specifies the types of exceptions that the block can handle, and each exception type is separated with a vertical bar (|).
-Note: If a catch block handles more than one exception type, then the catch parameter is implicitly final. In this example, the catch parameter ex is final and therefore you cannot assign any values to it within the catch block.
-
-@Order of finally and catch block
-Finally block can only appear after the catch block if a catch block is present for the corresponding try block.
-
-
-@Exception broadening
-It means that if a method declares to throw a given exception, the overriding method in a subclass can only declare to throw that exception or its subclass. For example:
-
-class A {
-   public void foo() throws IOException {..}
-}
-
-class B extends A {
-   @Override
-   public void foo() throws SocketException {..} // allowed
-
-   @Override
-   public void foo() throws SQLException {..} // NOT allowed
-}
-SocketException extends IOException, but SQLException does not.
-
-This is because of polymorphism:
-
-A a = new B();
-try {
-    a.foo();
-} catch (IOException ex) {
-    // forced to catch this by the compiler
-}
-If B had decided to throw SQLException, then the compiler could not force you to catch it, because you are referring to the instance of B by its superclass - A. On the other hand, any subclass of IOException will be handled by clauses (catch or throws) that handle IOException
-
-The rule that you need to be able to refer to objects by their superclass is the Liskov Substitution Principle.
-
-Since unchecked exceptions can be thrown anywhere then they are not subject to this rule. You can add an unchecked exception to the throws clause as a form of documentation if you want, but the compiler doesn't enforce anything about it.
-
-@Overloading v/s Overriding - Child Class Example
-Java Tutorials: Overloading is compile-time binding
-Most beginners in Java get confused between Overloading and Overriding. One should understand that overloading is compile-time binding whereas overriding is runtime binding.
-
-Have a look at the following example. There are three classes - Base, Derived and Test. As the name indicates class Derived extends class Base. The class Test has two overloaded methods with name methodA, with parameters Base and Derived respectively.
-
-class Base{
-}
-
-class Derived extends Base{
-}
-
-class Test{
-  public void methodA(Base b){
-    System.out.println("Test.methodA(Base)");
-  }
-  public void methodA(Derived b){
-    System.out.println("Test.methodA(Derived)");
-  }
-
-  public static void main(String []args){
-    Test t = new Test();
-    Base b = new Base();
-    Base d = new Derived();
-
-    t.methodA(b);
-    t.methodA(d);
-
-  }
-}
-
-What is the output?
-If your answer is
-Test.methodA(Base)
-Test.methodA(Derived)
-
-This is wrong
-
-For your surprise the answer is wrong. The actual output is
-
-Test.methodA(Base)
-Test.methodA(Base)
-
-Surprised?
-
-This is because overloading is compile-time binding. When the compiler sees the line t.methodA(d);
-It checks the data type of 'd', which is declared as 'Base'. So it looks for the method, methodA(Base) and binds the call to this method and hence the result.
-
-Let us look at another common problem. When the programmers think to override the 'equals', but endup really overloading the method, there by creating some unforeseen problems.
-
-Have a look at the following code, and say whether the equals method and the hashCode are implemented in the correct way?
-
-public class EqualsOverloadTest {
-
-  String id;
-
-  public EqualsOverloadTest(String id){
-    this.id = id;
-  }
-
-  public boolean equals(EqualsOverloadTest other){
-    return (other!=null) && this.id.equals(other.id);
-  }
-
-  public int hashCode() {
-    return id.hashCode();
-  }
-
-}
-
-In the first go, anyone will say the equals method is implemented correctly.
-It follows all the constraints for the 'equals' method, and also implements the 'hashCode()' method following the same contract. But, if you look closer, you fill notice that, the 'equals' method really overloads the Object.equals(Object) method, instead of over loading it.
-
-To prove that this won't work, let me give a simple program. In the main method, we are creating two EqualsOverloadTest objects with the same id. The two objects are added into the Set. Then we are printing the size of the set.
-public static void main(String[] args) {
-EqualsOverloadTest first = new EqualsOverloadTest("123");
-EqualsOverloadTest second =
-new EqualsOverloadTest(new String("123"));
-
-System.out.println(first.equals(second));
-
-Set set = new HashSet();
-set.add(first);
-set.add(second);
-System.out.println(set.size());
-}
-
-We will expect the size of the Set to be '1' since the two Objects are equal. But it will print as '2'.
-This is because we didn't override the 'equals' method. Whereas the first check with the equals method returned true, because we called the method as equals(EqualsOverloadTest), hence the proper method was called. But withing the set, it called the method equals(Object), which is not implemented, so uses the Object.equals(Object), which really checks whether they both are same instance or not. Hence we get an unexpected behaviour.
-
-Summary:
-Overloading is a static or compile-time binding and Overriding is dynamic or run-time binding.
-
-@How to define immutable object
-Don't provide "setter" methods — methods that modify fields or objects referred to by fields.
-Make all fields final and private.
-Don't allow subclasses to override methods. The simplest way to do this is to declare the class as final. A more sophisticated approach is to make the constructor private and construct instances in factory methods.
-If the instance fields include references to mutable objects, don't allow those objects to be changed:
-Don't provide methods that modify the mutable objects.
-Don't share references to the mutable objects. Never store references to external, mutable objects passed to the constructor; if necessary, create copies, and store references to the copies. Similarly, create copies of your internal mutable objects when necessary to avoid returning the originals in your methods.
-
-@How to know about the .class file
-1. class file in java is generated when you compile .java file using any Java compiler like Sun's javac which comes along JDK installation and can be found in JAVA_HOME/bin directory.
-
-2. class file contains byte codes. byte codes are special platform independent instruction for Java virtual machine. bytecode is not a machine language and mere instruction to JVM. since every machine or processor e.g. INTEL or AMD processor may have different instruction for doing same thing, its left on JVM to translate bytecode into machine instruction and by this way java achieves platform independence.
-
-3. class file of inner class contains $ in there name. So if a Java source file contains two classes, one of them is inner class than java compiler will generate two class file. separate class file for top level and inner class. you can distinguish them by looking at there name. Suppose you have top level class as "Hello" and inner class as "GoodBye" then java compiler will generate two class file:
-
-Hello.class
-Hello$GoodBye.class
-
-Hello$GoodBye.class is a class file for inner class. whose name is in format of top-class$inner-class.
-
-4. You can look bytecode of class file using javap command. javap command can also display method and field information from .class file. see my post how to decompile .class file in Java for more details.
-
-5. class file format is subject to change and its changed to support new feature introduced in Java 1.5. In general every java compiler and JRE comes with supported version of .class file format and you can not run a .class file which is in higher version of those supported by JRE. this often result in java.lang.UnsupportedClassVersion. class file has two version major and minor which is included inside class file. See my post Bad version number in .class file for more details.
-
-6. .class file in java is identified by a magic number in header which is a 4 byte CA FE BA BE ( in hex). which is the first element in .class file, followed by major and minor versions of class file
-
-The types u1, u2, and u4 represent an unsigned one-, two-, or four-byte quantity, respectively. In the Java SE platform, these types may be read by methods such as readUnsignedByte, readUnsignedShort, and readInt of the interface java.io.DataInput.
-ClassFile {
-    u4             magic;
-    u2             minor_version;
-    u2             major_version;
-    u2             constant_pool_count;
-    cp_info        constant_pool[constant_pool_count-1];
-    u2             access_flags;
-    u2             this_class;
-    u2             super_class;
-    u2             interfaces_count;
-    u2             interfaces[interfaces_count];
-    u2             fields_count;
-    field_info     fields[fields_count];
-    u2             methods_count;
-    method_info    methods[methods_count];
-    u2             attributes_count;
-    attribute_info attributes[attributes_count];
-}
-
-@Unit testing enterprise components
-Unit testing of Java EE 6 applications is no different than testing Java Platform, Standard Edition (Java SE). Java EE 6 components are just annotated classes. You should not treat them in a special way; instead, focus on the verification of the business logic.
-
-Arquillian seeks to minimize the burden on the developer to carry out integration testing by handling all aspects of test execution, including:
-
-managing the lifecycle of the container (start/stop),
-bundling the test class with dependent classes and resources into a deployable archive,
-enhancing the test class (e.g., resolving @Inject, @EJB and @Resource injections),
-deploying the archive to test (deploy/undeploy) and
-capturing results and failures.
-
-@Multiple applications in a container
-Two ideas: 
-1. Multiple war in a ear - user APP-INF/ lib, specify the path in application.xml
-2. Multiple ear - Put the libs on system classpath e.g. in JBOSS_HOME/server/default/lib, deployed as a shared library in Weblogic
-
-@Spring shared context between multiple webapp
-Assuming that spring configuration consists of beans specific to the web application concern (validators, controllers), to have bunch of beans share a single spring context, we use the 'locatorFactorySelector' and 'parentContextKey'. We simply add the following into our web.xml(s)
-<context-param>
-    <param-name>locatorFactorySelector</param-name>
-    <param-value>classpath:common-beans.xml</param-value>
-</context-param>
-The above would mean that you would have a file called common-beans.xml in the classpath for the web application, which has the following bean configured;
-<bean id="commonContext" class="org.springframework.context.support.ClassPathXmlApplicationContext"> 
-    <constructor-arg> 
-        <list> 
-            <value>classpath:service-beans.xml</value> 
-        </list> 
-    </constructor-arg> 
-</bean>
-
-
-PowerMockito v/s Mockito
-Szczepan Faber is the founder of the Mockito project. PowerMock was founded by Johan Haleby and Jan Kronquist.
-Mockito is available under MIT License. PowerMock is available under Apache license 2.0.
-Mockito does not include specific language characteristics like
-constructors or static methods for mocking.
-PowerMock offers constructors and static methods to Mockito and other frameworks,
-through its individual classloader and bytecode management.
-Mockito does not require ‘@RunWith’ annotation and base
-test class, while performing tests in suite.
-PowerMock requires both ‘@RunWith’ annotation and a base test class for testing a
-suite.
-Mockito does not support mocking of constructors.
-PowerMock supports mocking of constructors and also supports mocking of (i) final (ii)
-static (iii) native and (iv) private methods.
-Mockito does not support mocking of ‘new’-ed objects. PowerMock supports mocking of ‘new’-ed objects.
-Mockito contains a jar file in the classpath for supporting
-mocking APIs.
-PowerMock is a Mockito API.
-Mockito does not require any codes to be executed before a
-test.
-PowerMock includes ‘preparation for test’ codes.
-Mockito does not support mocking of enum data types. PowerMock supports mocking of enum data types.
-
-@Design Principles - additional
-DRY
-Encapsulate what changes
-Favor composition over inheritance
-Program to Interface
-Delegation
-
-@Nested Transaction also 9Spring v/s EJB Transaction Management)
-PROPAGATION_REQUIRES_NEW starts a new, independent "inner" transaction for the given scope. This transaction will be committed or rolled back completely independent from the outer transaction, having its own isolation scope, its own set of locks, etc. The outer transaction will get suspended at the beginning of the inner one, and resumed once the inner one has completed.
-
-Such independent inner transactions are for example used for id generation through manual sequences, where the access to the sequence table should happen in its own transactions, to keep the lock there as short as possible. The goal there is to avoid tying the sequence locks to the (potentially much longer running) outer transaction, with the sequence lock not getting released before completion of the outer transaction.
-
-PROPAGATION_NESTED on the other hand starts a "nested" transaction, which is a true subtransaction of the existing one. What will happen is that a savepoint will be taken at the start of the nested transaction. �f the nested transaction fails, we will roll back to that savepoint. The nested transaction is part of of the outer transaction, so it will only be committed at the end of of the outer transaction.
-
-Nested transactions essentially allow to try some execution subpaths as subtransactions: rolling back to the state at the beginning of the failed subpath, continuing with another subpath or with the main execution path there - all within one isolated transaction, and not losing any previous work done within the outer transaction.
-
-For example, consider parsing a very large input file consisting of account transfer blocks: The entire file should essentially be parsed within one transaction, with one single commit at the end. But if a block fails, its transfers need to be rolled back, writing a failure marker somewhere. You could either start over the entire transaction every time a block fails, remembering which blocks to skip - or you mark each block as a nested transaction, only rolling back that specific set of operations, keeping the previous work of the outer transaction. The latter is of course much more efficient, in particular when a block at the end of the file fails.
-
-@Spring vs EJB
-Use Spring if:
-  - Your application requires a lot of configuration beyond gluing together components and resources.
-  - You need advance AOP feathers.
- 
-Use EJB 3 If:
-  - Your application is very stateful.
-  - Standardization is an important consideration.
-  - Vendor Independence
-  
-@ORM v/s JDBC
-ORM speeds up development. It manages the data access while you simply code using POJO like classes. Unlike ORM, JDBC will require you quite some time of SQL coding. However, ORM requires quite a lot of mapping.
-
-Speaking about performance JDBC is always faster than ORM, unless your application uses several times the same data already cached by the ORM.
-
-@Why JPA?
-Is supported out of the box by an JEE compliant application server. Other arguments are more in favour of using ORM.
-
-@Entity States -(Persistent, Detached, New, Removed)
-New (Transient)
-A newly created object that hasn’t ever been associated with a Hibernate Session (a.k.a Persistence Context) and is not mapped to any database table row is considered to be in the New (Transient) state.
-
-To become persisted we need to either explicitly call the EntityManager#persist method or make use of the transitive persistence mechanism.
-Persistent (Managed)
-A persistent entity has been associated with a database table row and it’s being managed by the current running Persistence Context. Any change made to such entity is going to be detected and propagated to the database (during the Session flush-time). With Hibernate, we no longer have to execute INSERT/UPDATE/DELETE statements. Hibernate employs a transactional write-behind working style and changes are synchronized at the very last responsible moment, during the current Session flush-time.
-Detached
-Once the current running Persistence Context is closed all the previously managed entities become detached. Successive changes will no longer be tracked and no automatic database synchronization is going to happen.
-
-To associate a detached entity to an active Hibernate Session, you can choose one of the following options:
-
-Reattaching
-Hibernate (but not JPA 2.1) supports reattaching through the Session#update method.
-
-A Hibernate Session can only associate one Entity object for a given database row. This is because the Persistence Context acts as an in-memory cache (first level cache) and only one value (entity) is associated to a given key (entity type and database identifier).
-
-An entity can be reattached only if there is no other JVM object (matching the same database row) already associated to the current Hibernate Session.
-Merging
-The merge operaration is going to copy the detached entity state (source) to a managed entity instance (destination). If the merging entity has no equivalent in the current Session, one will be fetched from the database.
-
-The detached object instance will continue to remain detached even after the merge operation.
-Removed
-Although JPA demands that managed entities only are allowed to be removed, Hibernate can also delete detached entities (but only through a Session#delete method call).
-
-A removed entity is only scheduled for deletion and the actual database DELETE statement will be executed during Session flush-time.
-
-@Standalone config + lookup
-public class Main {
-    private static final String PERSISTENCE_UNIT_NAME = "todos";
-    private static EntityManagerFactory factory;
-
-    public static void main(String[] args) {
-        factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-        EntityManager em = factory.createEntityManager();
-        // read the existing entries and write to console
-        Query q = em.createQuery("select t from Todo t");
-        List<Todo> todoList = q.getResultList();
-        for (Todo todo : todoList) {
-            System.out.println(todo);
-        }
-        System.out.println("Size: " + todoList.size());
-
-        // create new todo
-        em.getTransaction().begin();
-        Todo todo = new Todo();
-        todo.setSummary("This is a test");
-        todo.setDescription("This is a test");
-        em.persist(todo);
-        em.getTransaction().commit();
-
-        em.close();
-    }
-}
-
-@Testing JPA/DAO layer
-One option is to use in memory DB, other option is to use DBUnit which takes care of resetting the DB. Another choice could be to mock JPA classes e.g. EntityManager.
-
-Transaction Management
-Container or Bean
-JTA or Resource_LOCAL
-You can control when a rollback is automatic or not; it only happens when the exception is either;
-
-- a runtime exception
-- an EjbException
-- any other exception marked with the annotation @ApplicationException
-
-With the annotation you can fully control if an automatic rollback should happen or not on your own exceptions. You could declare a runtime exception for example, but not have it rollback the transaction.
-
-
-@ApplicationException(rollback=false)
-public class MyException extends RuntimeException {
-
-  ...
-}
-
-@Multiple persistence units
-You know how it is with manuals, articles and tutorials. Everything is fine when the basics are covered. But then you go out into the real world and you want to actually apply the material. Then you take the next step, pushing the technology beyond the scope of the manual, the articles and the tutorials because the more difficult problems are always forgotten by the authors as if you will never face them. But of course you do, programming is not easy.
-
-The interesting topic when it comes to transactions is when you go beyond one persistence unit into multiple persistence units, that may target different databases. JTA can certainly handle that, and thus so can EJB technology. It doesn't just work out of the box though.
-
-First of all, you need a very specific type of datasource: an XA datasource. To keep it short and simple: an XA datasource is specifically designed to take part in a "two phase" transaction, or a transaction that targets multiple resources. Most established database implementations support XA datasources through their drivers.
-
-With the XA datasources in place, JTA is all setup to deal with you throwing multiple persistence units at it. What you shouldn't do however is to try and force two persistence units onto the same EJB. In stead, separate.
-
-
-@Stateless
-public class MyFirstEjbBean implements MyFirstEjb {
-
-  @PersistenceContext(name="first-pu")
-  private EntityManager em;
-
-  public void doSomething(){
-
-  }
-}
-
-
-
-@Stateless
-public class MySecondEjbBean implements MySecondEjb {
-  
-  @PersistenceContext(name="second-pu")
-  private EntityManager em;
-
-  public void doSomething(){
-
-  }
-}
-
-
-
-So far so good, two EJBs with two different persistence units. What will work with XA datasources and fail without it is this:
-
-
-@Stateless
-public class MyThirdEjbBean implements MyThirdEjb {
-  
-  @EJB
-  private MyFirstEjb first;
-
-  @EJB
-  private MySecondEjb second;
-
-
-  public void reallyDoSomething(){
-    first.doSomething();
-    second.doSomething();
-  }
-}
-
-
-Notice how in one business method call the transactions are mixed and mashed. But with XA datasources and JTA, this can work.
-
-Just note that as soon as you get into the realm of XA datasources and distributed transactions, when something blows up you'll probably get the most vague exceptions you'll ever encounter with exceptions yelling TWO PHASE COMMIT FAILURE ABORT errors at you. Shrug it off and don't be intimidated however, the truth is usually as simple as a query borking somewhere and the root cause will be hidden somewhere in the logged stacktraces. But it may seem like the container is on the brink of destruction when you first have to deal with this.
-
-@JMS Message Data Types
-The JMS API defines five types of message body:
-
-Stream - A StreamMessage object's message body contains a stream of primitive values in the Java programming language ("Java primitives"). It is filled and read sequentially.
-Map - A MapMessage object's message body contains a set of name-value pairs, where names are String objects, and values are Java primitives. The entries can be accessed sequentially or randomly by name. The order of the entries is undefined.
-Text - A TextMessage object's message body contains a java.lang.String object. This message type can be used to transport plain-text messages, and XML messages.
-Object - An ObjectMessage object's message body contains a Serializable Java object.
-Bytes - A BytesMessage object's message body contains a stream of uninterpreted bytes. This message type is for literally encoding a body to match an existing message format. In many cases, it is possible to use one of the other body types, which are easier to use. Although the JMS API allows the use of message properties with byte messages, they are typically not used, since the inclusion of properties may affect the format.
-Of those five, only two are useful: Bytes and Text messages. The three others have their own issues1 but today's rant is about ObjectMessage.
-
-Architectural Issues
-One of the advantage of using messaging system is loose coupling. The producers and consumers of a destination does not need to know each other or be online at the same time to exchange messages. They only need to agree on the data sent in the message.
-
-By using an ObjectMessage, the type of the Java object is their agreement. This means that both sides MUST be able to understand the object and its whole graph type. You are losing one degree of abstraction by using an ObjectMessage, the consumer(s) of this message must know the implementation type of the payload and have all the classes required to deserialize it. This introduces a strong coupling between producers and consumers since they now must share a common set of classes (which grows with the complexity of the payload type).
-
-@Transaction Management, Timeout, Acknowledge Mode
-For a message-driven bean's message listener methods (or interface), only the REQUIRED and NOT_SUPPORTED values may be used. The default is NOT_SUPPORTED. The container always starts a new transaction before calling onMessage(). If another method is called from onMessage(), the container passes along the current transaction context.
-
-The timeout configuration is server specific either using activation config property or through annotation.
-
-In transacted sessions (see Using JMS API Local Transactions), acknowledgment happens automatically when a transaction is committed. If a transaction is rolled back, all consumed messages are redelivered.
-In nontransacted sessions, when and how a message is acknowledged depend on the value specified as the second argument of the createSession method. The three possible argument values are as follows:
-Session.AUTO_ACKNOWLEDGE: The session automatically acknowledges a client’s receipt of a message either when the client has successfully returned from a call to receive or when the MessageListener it has called to process the message returns successfully.
-A synchronous receive in an AUTO_ACKNOWLEDGE session is the one exception to the rule that message consumption is a three-stage process as described earlier. In this case, the receipt and acknowledgment take place in one step, followed by the processing of the message.
-Session.CLIENT_ACKNOWLEDGE: A client acknowledges a message by calling the message’s acknowledge method. In this mode, acknowledgment takes place on the session level: Acknowledging a consumed message automatically acknowledges the receipt of all messages that have been consumed by its session. For example, if a message consumer consumes ten messages and then acknowledges the fifth message delivered, all ten messages are acknowledged.
-Note - In the Java EE platform, a CLIENT_ACKNOWLEDGE session can be used only in an application client, not in a web component or enterprise bean.
-Session.DUPS_OK_ACKNOWLEDGE: This option instructs the session to lazily acknowledge the delivery of messages. This is likely to result in the delivery of some duplicate messages if the JMS provider fails, so it should be used only by consumers that can tolerate duplicate messages. (If the JMS provider redelivers a message, it must set the value of the JMSRedelivered message header to true.) This option can reduce session overhead by minimizing the work the session does to prevent duplicates.
-
-@Message selector
-The MDB consumer can specify using the activation config property the message selector string as an SQL92 expression e.g. NewsType = ’Sports’ OR NewsType = ’Opinion’.
-A POJO receiver can be created using additional argument e.g. MessageConsumer consumer = session.createConsumer(destination, "OS = 'LINUX'"); for selecting message.
-The message producer can call the setProprty method to set the property name and value.
-
-@Persistent and Durable / Reliable
-Persistent apply to messages while durable apply to subscriptions.
-Queues don’t have durable/ non-durable distinction because consumer always gets a durable subscription.
-For queues:
-Persistent : Message will be saved on disk and sent later if consumer is inactive.
-Non-persistent : Messages will be saved in-memory and sent later if consumer is inactive. But they will not survive a broker re-start.
-For topics:
-Persistent & Durable : Message will be saved both on-disk and in-memory and sent later if subscriber is inactive.
-Persistent  & Non-Durable : Message will not be saved either in-memory or on disk and any inactive subscriber at the moment of message receipt at broker will not receive the message.
-Non-persistent & Durable : Message will be saved in-memory and sent later if subscriber is inactive. So it will not survive a broker re-start.
-Non-persistent & Non-Durable : Message will not be saved either in-memory or on disk and any inactive subscriber at the moment of message receipt at broker will not receive the message. Similar to Persistent & Non-Durable case.
-
-@Message expiry
-Using setTimeToLive method of MessageProducer. Also note that the method setJMSExpiration of Message is not meant for client usage instead it is used by the provider to set the expiration time.
-
-@JMS ReplyTo
-The JMS API allows messages to declare a replyTo Destination instance. (i.e. the superclass of Queue, Topic). A service could then send a reply message to the sender using this queue.
-Scenario 1
-In this scenario the Destination is pre-configured and hence proven to work. There is not much value to set this destination as a value for JMSReplyTo header as the receiver might already know about the existence of this pre-configured destination.
-
-Scenario 2
-In this scenario the sender creates a temporary Destination and receiver will know about this only by calling getJMSReplyTo() method on the received Message. This kind of establishes a private channel between sender and receiver. Read this nice article on pros and cons of temporary destinations.
-
-Sample code
-Queue tempQueue = qSession.createTemporaryQueue();
-TextMessage request = qSession.createTextMessage();
-request.setJMSReplyTo(tempQueue);
-QueueReceiver qReceiver = qSession.createReceiver(tmpQueue);
-Message response = qReceiver.receive();
-
-@JMS2.0 new features
-Delivery Delay - You can now specify a delivery delay on a message. The JMS provider will not deliver the message until after the specified delivery delay has elapsed.
-Multiple Consumers Allowed on the Same Topic Subscription - In JMS 1.1, a subscription on a topic was not permitted to have more than one consumer at a time. This meant that the work of processing messages on a topic subscription could not be shared among multiple threads, connections, or Java Virtual Machines (JVMs), thereby limiting the scalability of the application. This restriction has been removed in JMS 2.0 by the introduction of a new kind of topic subscription called a shared subscription.
-Sending Messages Asynchronously - Another new feature of JMS 2.0 is the ability to send a message asynchronously. This feature is available for applications running in Java SE or the Java EE application client container. It is not available to applications that run in the Java EE Web or EJB container. JMS 2.0 introduces the ability to perform an asynchronous send. When a message is sent asynchronously, the send method sends the message to the server and then returns control to the application without waiting for a reply from the server. Instead of being blocked unproductively while the JMS client waits for a reply, the application can do something useful, such as sending a further message or performing some processing. When a reply is received back from the server to indicate that the message has been received by the server and persisted, the JMS provider notifies the application by invoking the callback method onCompletion on an application-specified CompletionListener object.
-JMSXDeliveryCount - JMS 2.0 allows applications that receive a message to determine how many times the message has been redelivered. This information can be obtained from the message property JMSXDeliveryCount:
-int deliveryCount = message.getIntProperty("JMSXDeliveryCount");
-JMSXDeliveryCount is not a new property; it was defined in JMS 1.1. However, in JMS 1.1, it was optional for a JMS provider to actually set it, which meant application code that used it was not portable. In JMS 2.0, it becomes mandatory for JMS providers to set this property, allowing portable applications to make use of it.
-MDBConfigurationProperties and simplified JMS API based on three classes JMSContext, JMSProducer and JMSConsumer.
+JSF
+Debugging JSF phases
+Managed bean v/s Backing bean
+Lifecycle of JSF
+Converter and Validator in JSF
+JSF v/s GWT
