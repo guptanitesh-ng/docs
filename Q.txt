@@ -1,0 +1,136 @@
+Questions from Multithreading- 
+•	What are the new features introduced in java 6 for collection framework to have a better synchronization ConcurrentNavigableMap(its advantages), CopyOnWriteArrayList, CopyOnWrite-ArraySe is expected. It also comes under collection part. 
+•	Callable and Future.
+•	Thread Synchronization – expected the working of synchronized block and methods
+•	Static vs Non-Static synchronization / locking.
+•	All methods of thread.  Join, wait Notify, Notify all are mostly preferred.
+•	Use of Volatile keyword
+•	Immutability of objects – All aspects of immutable class and defensive copying. why do we need to create immutable class. 
+•	Real life scenarios where thread priority, concurrency and thread pooling is asked in tricky manner
+•	Atomic variables in synchronization. 
+10. Explain Threading Pool in Executor framework?
+11. Scenario: Suppose 10 threads process parallel if one thread is stop because of some exception all threads will stop automatically also if same thread is start all threads will be start how to do it?
+16)   Multi threading? Two publishers even and odd number. Make a program to print them in order  1,3,5,7,9  other other 0,2,4,6,8,10
+
+Questions in collection – 
+-->	Difference between ArrayList, linkedlist and  Vector - https://dzone.com/articles/arraylist-vs-linkedlist-vs
+-->	Treeset, Hashset differences and internal functionality. -
+	Internally Hashset uses HashMap, LinkedHashSet has a linked running through the entries of the HashMap while the TreeMap uses TreeMap which internally is a Red Black tree implementation.
+	Since all three implements Set interface they can be used for common Set operations like not allowing duplicates but since HashSet, TreeSet and LinkedHashSet has there special feature which makes them appropriate in certain scenario. Because of sorting order provided by TreeSet, use TreeSet when you need a collection where elements are sorted without duplicates. HashSet are rather general purpose Set implementation, Use it as default Set implementation if you need a fast, duplicate free collection. LinkedHashSet is extension of HashSet and its more suitable where you need to maintain insertion order of elements, similar to List without compromising performance for costly TreeSet. Another use of LinkedHashSet is for creating copies of existing Set, Since LinkedHashSet preservers insertion order, it returns Set which contains same elements in same order like exact copy. In short,  although all three are Set interface implementation they offer distinctive feature, HashSet is a general purpose Set while LinkedHashSet provides insertion order guarantee and TreeSet is a SortedSet which stores elements in sorted order specified by Comparator or Comparable in Java.
+-->	Use of Collections (class) utility. - provides for immutable empty collections, unmodifiable collections, synchronized collections, binary search, min, max, reverse, shuffle, and sort
+-->	Use of sorting techniques like comparable, comparator etc.
+-->	Why to have equal and hashcode method overrides. - to serve the comparison/hashing purpose correctly
+-->	what is the use of final keyword. - immutability
+-->	What does below statement imply.(Internally how does it work with and without final keyword )
+	final Emp e= new Emp(); - create a new object on heap, assign a reference to the location of the memory address and this reference is immutable due to final.
+--> Already sorted Array. How to find  specific  number?--- Binary Search
+--> Benefits of Concurrent #Map over #MAP.
+	ConcurrentHashMap
+	You should use ConcurrentHashMap when you need very high concurrency in your project.
+	It is thread safe without synchronizing the whole map.
+	Reads can happen very fast while write is done with a lock.
+	There is no locking at the object level.
+	The locking is at a much finer granularity at a hashmap bucket level.
+	ConcurrentHashMap doesn’t throw a ConcurrentModificationException if one thread tries to modify it while another is iterating over it.
+	ConcurrentHashMap uses multitude of locks.
+
+	SynchronizedHashMap
+	Synchronization at Object level.
+	Every read/write operation needs to acquire lock.
+	Locking the entire collection is a performance overhead.
+	This essentially gives access to only one thread to the entire map & blocks all the other threads.
+	It may cause contention.
+	SynchronizedHashMap returns Iterator, which fails-fast on concurrent modification.
+
+Questions from java.lang.String
+Why is String immutable?          
+•	StringBuilder and StringBuffer usage - synchronization and performance
+•	Scenario based questions like 
+o	There is a file with some text in it. How to count the total no of Lines, words it.
+o	How to count the repeated words in a file.
+•	String formatting and immutable aspect of String
+5)      Revers word in String.
+13)   Ina file some words, you need to print the frequency of word.
+4. Scenario: Suppose I have your CV and i need to calculate total count of JAVA word and total count of world in your CV how to do it?
+JDBC
+•	Difference between statements of JDBC.
+•	Advantage of having  Hibernate over JDBC and also possible sql injection security attacks. 
+•	Mostly Callable statement, Scrollable result-set transaction management etc.
+
+Miscellaneous:
+•	DateTime, Gregorian Calendar etc.
+7. How to calculate total count of users are visited to your website?
+12. Scenario: Suppose at time of xml parsing if you read name(in short form) ‘kk’ then in database you will write Kiran kumar how to do it?
+9)      Out of Memory exception? How do you proceed for production issue?
+10)   How to get the thread dump?
+4)      1 Million numbers in Array .. how to short this Array?
+Tree Map
+24)   How to reduce the time complexity of O(n), if all elements are having the same hash code. We are free to choose any data structure.
+
+
+Questions from Spring
+•	What is IOC and DI? 
+•	Integration of REST and Spring.
+•	Integration of Spring and Hibernate
+•	Spring Security module- Authentication flow. 
+•	Spring AOP- flow and use.
+
+Questions from database- 
+•	Expect a very basic question on Joins.
+•	Primary, Unique and foreign keys
+•	Difference in procedure and function. 
+•	Use of triggers.
+•	Scenario based- How you will have a periodic back up of tables. 
+2 tables emp and dept. Retrieve number of employees per department.
+8. How to do it table backup (reflection) on particular time in SQL server? 
+6)      SQL quesries.. like find max salary form each department
+7)      What are different join?  Then specific join.. outer join
+20)    How you write  Right outer join? Is it possible?   Write syntex of Left outer join  and Right outer join.. ORACLE.. Right outer joine where it will be located ..? next to Table 1 or table2?
+25)   Sql Query - Removing duplicate records from table.
+                         - no. of emp. acc. to gender whose DOB is in b/w 1980-2000.
+                         - All the emp. having addresses.
+                         - All employees having salary higher than average salary.
+8)      Diff between procedure and functions
+14. Why we will go with Hibernate if Jdbc already available?
+15. Explain second level Cache?
+
+Concurrent
+Executor f/w
+Kind of thread pools
+volatile v/s atomic
+
+Java
+Ice Cream Parlour design
+Shopping Cart discount design
+Execute a program to check heap state with all 4 GC algorithms
+
+MAVEN
+profile
+multimodule
+archetype
+phases/lifecycle
+test, code coverage
+static code analysis
+
+REST
+application config to setup
+error handling
+API exposure
+Session Management
+
+@Contribution
+JPA Standalone -  performance, query correctness
+XML Generator
+SVN Tagging utility
+Service Virtualization
+REST invoker from main
+REST wrapper classes
+Load balancing for REST URI
+Error message replay
+
+JSF
+Debugging JSF phases
+Managed bean v/s Backing bean
+Lifecycle of JSF
+Converter and Validator in JSF
+JSF v/s GWT
