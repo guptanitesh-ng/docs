@@ -6,12 +6,25 @@ https://www.ibm.com/developerworks/java/library/j-jtp11234/
 https://www.ibm.com/developerworks/java/library/j-jtp10264/
 https://www.ibm.com/developerworks/java/library/j-jtp04186/
 
+http://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/
+
 @REST
 https://martinfowler.com/articles/richardsonMaturityModel.html
 
 @Spring
 Injecting prototype bean in a singleton bean http://www.logicbig.com/tutorials/spring-framework/spring-core/injecting-singleton-with-prototype-bean/
 
-@Hibernate
+@JPA - Hibernate - EclipseLink
 Cache - http://javabeat.net/introduction-to-hibernate-caching/
 https://codespot.net/2014/02/03/hibernate-caching-strategies/
+https://stackoverflow.com/questions/30413321/how-hibernate-ensures-second-level-cache-is-updated-with-latest-data-in-database
+http://www.eclipse.org/eclipselink/documentation/2.6/concepts/cache010.htm
+http://javarevisited.blogspot.co.uk/2017/03/difference-between-first-and-second-level-cache-in-Hibernate.html
+
+@Synchronized vs ReentrantLock
+http://javarevisited.blogspot.co.uk/2013/03/reentrantlock-example-in-java-synchronized-difference-vs-lock.html
+
+@Isolation level
+https://en.wikipedia.org/wiki/Isolation_(database_systems)#Phantom_reads
+https://stackoverflow.com/questions/4034976/difference-between-read-commit-and-repeatable-read
+https://en.wikipedia.org/wiki/ACID
