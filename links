@@ -5,3 +5,13 @@ https://www.ibm.com/developerworks/java/library/j-jtp06197/
 https://www.ibm.com/developerworks/java/library/j-jtp11234/
 https://www.ibm.com/developerworks/java/library/j-jtp10264/
 https://www.ibm.com/developerworks/java/library/j-jtp04186/
+
+@REST
+https://martinfowler.com/articles/richardsonMaturityModel.html
+
+@Spring
+Injecting prototype bean in a singleton bean http://www.logicbig.com/tutorials/spring-framework/spring-core/injecting-singleton-with-prototype-bean/
+
+@Hibernate
+Cache - http://javabeat.net/introduction-to-hibernate-caching/
+https://codespot.net/2014/02/03/hibernate-caching-strategies/
