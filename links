@@ -8,6 +8,11 @@ https://www.ibm.com/developerworks/java/library/j-jtp04186/
 
 http://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/
 
+A thread pool is a group of threads that can be used to program a server
+program without creating new threads each time a new connection is created
+but rather reuse existing ones. How would you program a thread
+pool?
+
 @REST
 https://martinfowler.com/articles/richardsonMaturityModel.html
 
