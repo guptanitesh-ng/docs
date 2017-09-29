@@ -13,6 +13,13 @@ program without creating new threads each time a new connection is created
 but rather reuse existing ones. How would you program a thread
 pool?
 
+java concurrency interview questions
+http://www.cs.carleton.edu/faculty/dmusican/cs348/java_multi/
+thread programming exercises in java
+java concurrency programming exercises
+http://se.inf.ethz.ch/old/teaching/2010-S/0050/slides/13_softarch_self_study_threads.pdf
+http://cs.lth.se/english/sde/phd-courses/advanced-concurrent-programming-in-java/
+
 @REST
 https://martinfowler.com/articles/richardsonMaturityModel.html
 
@@ -33,3 +40,8 @@ http://javarevisited.blogspot.co.uk/2013/03/reentrantlock-example-in-java-synchr
 https://en.wikipedia.org/wiki/Isolation_(database_systems)#Phantom_reads
 https://stackoverflow.com/questions/4034976/difference-between-read-commit-and-repeatable-read
 https://en.wikipedia.org/wiki/ACID
+
+https://dzone.com/articles/how-detect-java-deadlocks
+
+http://www.techpaste.com/2011/09/garbage-collector-g1-concurrent-mark-sweep-collector-cms/
+https://www.youtube.com/results?search_query=jvm+g1gc
